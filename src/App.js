@@ -3,7 +3,10 @@ import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { useState } from "react";
 import Success from "./Success";
 function App() {
-  const [pageData, setPageData] = useState(2);
+  const [pageData, setPageData] = useState(1);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isActive, setActiveOption] = useState("Main Color");
+  const [isActiveNumber, setActiveOptionNumber] = useState(0);
   const [FormData, setFormData] = useState({
     nickName: "",
     team: "",
@@ -14,6 +17,7 @@ function App() {
     number2: "",
     email: "",
   });
+  console.log(isChecked);
   const FormSection = () => {
     return (
       <>
@@ -22,19 +26,24 @@ function App() {
           <form className=" max-w-[70%] flex-1">
             <div className="mb-2">
               <div className="text-left font-bold">Nickname</div>
-              <input className="w-full text-white bg-black border border-[#636363]"></input>
-            </div>{" "}
-            <div className="mb-2">
-              <div className="text-left font-bold">Nickname</div>
-              <input className="w-full text-white bg-black border border-[#636363]"></input>
+              <input
+                type="text"
+                className="w-full text-white bg-black border border-[#636363]"
+              ></input>
             </div>{" "}
             <div className="mb-2">
               <div className="text-left font-bold">Team</div>
-              <input className="w-full text-white bg-black border border-[#636363]"></input>
+              <input
+                type="text"
+                className="w-full text-white bg-black border border-[#636363]"
+              ></input>
             </div>{" "}
             <div className="mb-2 flex flex-col justify-start">
               <div className="text-left font-bold">Date of Birth</div>
-              <input className=" w-[150px] text-white bg-black border border-[#636363]"></input>
+              <input
+                type="date"
+                className=" w-[150px] text-white bg-black border border-[#636363]"
+              ></input>
             </div>{" "}
             <div className="mb-2 flex flex-col justify-start">
               <div className="text-left font-bold">Sex</div>
@@ -42,15 +51,26 @@ function App() {
             </div>{" "}
             <div className="mb-2">
               <div className="text-left font-bold">Country of Birth</div>
-              <input className="w-full text-white bg-black border border-[#636363]"></input>
+              <input
+                type="text"
+                className="w-full text-white bg-black border border-[#636363]"
+              ></input>
             </div>{" "}
             <div className="mb-2 flex flex-col justify-start">
               <div className="text-left font-bold">Number</div>
-              <input className=" w-[70px] text-white bg-black border border-[#636363]"></input>
+              <input
+                type="number"
+                max="3"
+                className=" w-[70px] text-white bg-black border border-[#636363]"
+              ></input>
             </div>{" "}
             <div className="mb-2 flex flex-col justify-start">
               <div className="text-left font-bold">Number-2</div>
-              <input className=" w-[70px] text-white bg-black border border-[#636363]"></input>
+              <input
+                type="number"
+                max="3"
+                className=" w-[70px] text-white bg-black border border-[#636363]"
+              ></input>
             </div>{" "}
             <div className="mb-2 flex flex-col justify-start">
               <div className="text-left font-bold">
@@ -59,11 +79,17 @@ function App() {
                   (Lorem Ipsum is simply dummy text of the printing and)
                 </span>
               </div>
-              <input className=" w-full text-white bg-black border border-[#636363]"></input>
+              <input
+                type="email"
+                className=" w-full text-white bg-black border border-[#636363]"
+              ></input>
             </div>{" "}
             <div className="mb-2 flex flex items-center">
               <input
                 type="checkbox"
+                required={true}
+                onClick={() => setIsChecked(!isChecked)}
+                checked={isChecked}
                 className="text-white mr-2 bg-black border border-white"
               ></input>
               <div className="text-left font-bold">
@@ -151,6 +177,15 @@ function App() {
                       <div
                         key={key}
                         className="my-3 font-bold hover:text-amber-600 cursor-pointer"
+                        onClick={() => {
+                          let d = isActive;
+                          setActiveOption(value.title);
+                          setActiveOptionNumber(key);
+                          document.getElementById(d).style.color = "#fff";
+                          document.getElementById(value.title).style.color =
+                            "rgb(217 119 6)";
+                        }}
+                        id={value.title}
                       >
                         {value.title}
                       </div>
@@ -169,7 +204,7 @@ function App() {
                   {/* // Drak to Light  */}
 
                   <div className="flex flex-wrap">
-                    {Data.map((value, key) => (
+                    {Data[isActiveNumber].data.map((value, key) => (
                       <img
                         src={value.url}
                         className="w-[120px] h-[120px] object-cover m-2"
@@ -193,7 +228,12 @@ function App() {
             </p>
             <div className=" bottom-5  flex  items-center text-white ">
               <div className="mr-2">{pageData}/2</div>
-              <div className="px-7 py-2 rounded-md bg-[#1d232a] shadow-lg shadow-white/5">
+              <div
+                className="px-7 py-2 rounded-md bg-[#1d232a] shadow-lg shadow-white/5 cursor-pointer"
+                onClick={
+                  pageData === 1 ? () => setPageData(2) : () => setPageData(3)
+                }
+              >
                 {pageData === 1 ? "NEXT" : "SUBMIT"}
               </div>
             </div>
@@ -253,50 +293,797 @@ const ScrollData = [
 ];
 
 const Data = [
+  //main cloor
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+    ],
   },
+
+  // Higlight
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+    ],
   },
+
+  //wheel
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
+  // Rims
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+    ],
   },
+  // Hoods
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+    ],
   },
+  // Spolier
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+    ],
   },
+
+  //Doors
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
+  //Moirros
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
+  //PIPE
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
+  //Stickers
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
+  // Molding
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero2.png",
+      },
+    ],
   },
+  //Top
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
+  //Lights
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
+  //Air inTake
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
+  //Windows
   {
-    url: process.env.PUBLIC_URL + "hero.png",
+    data: [
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+      {
+        url: process.env.PUBLIC_URL + "hero.png",
+      },
+    ],
   },
 ];
 
